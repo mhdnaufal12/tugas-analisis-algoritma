@@ -41,16 +41,19 @@ def load_books(csv_path):
     return rows
 
 
+
 def find_title_column(books):
     """Menentukan kolom judul dengan nama kolom yang umum digunakan."""
     columns = list(books[0].keys())
-    preferred = ("title", "book title", "name", "judul")
+    preferred = ("book-title", "title", "book title", "name", "judul")
+
     for wanted in preferred:
         for column in columns:
             if normalize(column) == wanted:
                 return column
-    # Jika nama kolom tidak umum, gunakan kolom pertama sebagai fallback.
-    return columns[0]
+
+    raise ValueError("Kolom judul buku tidak ditemukan. Periksa header CSV.")
+
 
 
 def linear_search(books, title, title_column):
